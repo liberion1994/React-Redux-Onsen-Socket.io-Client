@@ -1,0 +1,18 @@
+{
+  "name": "onsenui-v2-react-splitter",
+  "version": "2.1.1+20160920.1",
+  "description": "",
+  "dependencies": {
+    "onsenui": "^2.0.0-rc.5",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "react-onsenui": "*",
+    "socket.io-client": "latest",
+    "redux": "latest",
+    "react-redux": "latest",
+    "redux-devtools": "latest",
+    "redux-thunk": "latest",
+    "socket.io-request": "latest",
+    "redux-socket.io": "latest"
+  }
+}

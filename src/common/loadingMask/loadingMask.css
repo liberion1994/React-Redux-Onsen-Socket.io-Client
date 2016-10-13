@@ -1,0 +1,8 @@
+.mask-animate {
+    animation: maskIn .3s ease;
+}
+
+@keyframes maskIn{
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
