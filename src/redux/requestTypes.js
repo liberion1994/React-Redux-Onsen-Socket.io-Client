@@ -3,3 +3,9 @@
  */
 
 export const AUTH = 'AUTH';
+
+export const AUTH_TYPES = {
+    AUTH_CODE: 'AUTH_CODE',
+    LOGIN: 'LOGIN',
+    REG_AND_LOGIN: "REG_AND_LOGIN"
+};

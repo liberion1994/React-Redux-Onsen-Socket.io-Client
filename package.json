@@ -12,7 +12,6 @@
     "react-redux": "latest",
     "redux-devtools": "latest",
     "redux-thunk": "latest",
-    "socket.io-request": "latest",
-    "redux-socket.io": "latest"
+    "socket.io-request": "latest"
   }
 }

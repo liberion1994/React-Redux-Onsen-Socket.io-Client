@@ -1,0 +1,45 @@
+.login-animate {
+    animation: pageIn .3s ease;
+}
+
+@keyframes pageIn{
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+
+.to-left-page {
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    width: 50%;
+    left: 0;
+    color: white;
+    opacity: 1;
+    font-size: 15vw;
+    line-height: 60vh;
+    text-align: left;
+    padding: 5px;
+    animation: bling 3s infinite;
+}
+
+.to-right-page {
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    width: 50%;
+    right: 0;
+    color: white;
+    opacity: 1;
+    font-size: 15vw;
+    line-height: 60vh;
+    text-align: right;
+    padding: 5px;
+    animation: bling 3s infinite;
+}
+
+@keyframes bling {
+    from {opacity: 1.0;}
+    50% {opacity: 0.5;}
+    to {opacity: 1.0;}
+}

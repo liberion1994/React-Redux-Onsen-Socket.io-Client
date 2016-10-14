@@ -11,7 +11,6 @@ export default class HallPage extends React.Component {
 
         this.state = {
             pullToRefreshState: 'initial',
-            username: '345'
         };
 
         this.onToolBarButtonClicked = this.onToolBarButtonClicked.bind(this);
@@ -44,7 +43,7 @@ export default class HallPage extends React.Component {
             case 'preaction':
                 return '快松手啦';
             case 'action':
-                return (<div><i className="fa fa-spinner fa-spin fa-fw"></i>又要刷新了</div>);
+                return (<div><i className="fa fa-spinner fa-spin fa-fw" />又要刷新了</div>);
         }
     }
 

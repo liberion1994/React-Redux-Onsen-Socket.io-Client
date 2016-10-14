@@ -24,7 +24,13 @@ export const Authentication = {
     FAILED: '验证失败'
 };
 
+export const Socket = {
+    CONNECTED: '已连接',
+    DISCONNECTED: '未连接'
+};
+
 const exampleState = {
+    socket: Socket.CONNECTED,
     auth: Authentication.UNAUTHENTICATED,
     pageLocation: PageLocation.PLAYERS,
     agentStatus: AgentStatus.HALL,
