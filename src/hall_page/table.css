@@ -1,0 +1,65 @@
+.table-whole {
+    width: 50vw;
+    height: 50vw;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-size: 6vw;
+    /*the line height is relevant to the percentage of table view*/
+    line-height: 28vw;
+}
+
+.table {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    border-radius: 50%;
+    color: dodgerblue;
+    background: white;
+    box-sizing: border-box;
+    border: solid 1vw dodgerblue;
+    box-shadow: 2px 2px 2px #aaaaaa;
+}
+
+.seat {
+    position: absolute;
+    width: 15%;
+    height: 15%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: solid 1.5vw white;
+    transition: border-width .1s;
+    background: dodgerblue;
+    box-shadow: 1px 1px 1px #aaaaaa;
+}
+
+.seat:active {
+    border-width: 0;
+}
+
+.seat1 {
+    left: 42.5%;
+    top: 2.5%;
+}
+
+.seat2 {
+    left: 2.5%;
+    top: 35%;
+}
+
+.seat3 {
+    right: 2.5%;
+    top: 35%;
+}
+
+.seat4 {
+    left: 20%;
+    bottom: 7.5%;
+}
+
+.seat5 {
+    right: 20%;
+    bottom: 7.5%;
+}

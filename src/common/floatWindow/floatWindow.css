@@ -1,0 +1,38 @@
+.wrapper {
+    position: fixed;
+    top: 10vh;
+    z-index: 2;
+}
+
+.tab {
+    position: relative;
+    width: 8vw;
+    height: 8vh;
+    text-align: center;
+    line-height: 4vh;
+    display: block;
+    background: black;
+    color: white;
+    opacity: 0.3;
+    box-shadow: 0 2px 2px #aaaaaa;
+}
+
+.content {
+    display: block;
+    background: black;
+    color: white;
+    opacity: 0.3;
+    box-shadow: 0 2px 2px #aaaaaa;
+    transition: width .5s, height .5s;
+}
+
+.noti {
+    width: 2vw;
+    height: 2vw;
+    padding: 0 0;
+    border-radius: 1vw;
+    position: absolute;
+    top: 0;
+    background: red;
+    display: block;
+}

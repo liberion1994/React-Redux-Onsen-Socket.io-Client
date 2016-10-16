@@ -14,6 +14,10 @@ export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const SOCKET_READY = 'SOCKET_READY';
 export const SOCKET_DISCONNECT = 'SOCKET_DISCONNECT';
 
+export const GET_TABLE_REQUEST = 'GET_TABLE_REQUEST';
+export const GET_TABLE_SUCCESS = 'GET_TABLE_SUCCESS';
+export const GET_TABLE_FAILURE = 'GET_TABLE_FAILURE';
+
 export function socket_ready() { return { type: SOCKET_READY } }
 export function socket_disconnect() { return { type: SOCKET_DISCONNECT } }
 
@@ -57,10 +61,43 @@ export function authenticate(content) {
                     localStorage.authenticationCode = res.authenticationCode;
                     dispatch(auth_success(res.username));
                 }
-                //TODO set localstorage here
             })
             .catch(function (err) {
                 dispatch(auth_failure('请求出错: ' + (err.stack || err)));
+            });
+    }
+}
+
+function get_table_request() {
+    return {type: GET_TABLE_REQUEST};
+}
+
+function get_table_success(content) {
+    return {type: GET_TABLE_SUCCESS, content: content};
+}
+
+function get_table_failure(errorInfo) {
+    return {type: GET_TABLE_FAILURE, errorInfo: errorInfo}
+}
+
+/**
+ * 获取大厅信息，在加载大厅页面时触发
+ * @returns {function(*)}
+ */
+export function get_tables() {
+    return dispatch => {
+        dispatch(get_table_request());
+        ioreq(socket).request(RequestTypes.GET_TABLES, null)
+            .then(function (res) {
+                if (!res.success) {
+                    dispatch(auth_failure(res.errorInfo));
+                    dispatch(get_table_failure('请求出错: 身份验证失败'));
+                } else {
+                    dispatch(get_table_success(res.content));
+                }
+            })
+            .catch(function (err) {
+                dispatch(get_table_failure('请求出错: ' + (err.stack || err)));
             });
     }
 }

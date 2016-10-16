@@ -1,8 +1,7 @@
 import React from "react";
-import {Page, PullHook} from "react-onsenui";
+import {Page} from "react-onsenui";
 import Navbar from "../common/navbar";
-import TableList from "./tableList";
-
+import Table from "./table";
 
 export default class HallPage extends React.Component {
 
@@ -10,54 +9,26 @@ export default class HallPage extends React.Component {
         super(props);
 
         this.state = {
-            pullToRefreshState: 'initial',
         };
 
         this.onToolBarButtonClicked = this.onToolBarButtonClicked.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleLoad = this.handleLoad.bind(this);
     }
 
     componentDidMount() {
-
+        this.props.loadData();
     }
 
     onToolBarButtonClicked() {
         this.props.onToolBarButtonClicked();
     }
 
-    handleChange(e) {
-        this.setState({pullToRefreshState: e.state});
-    }
-
-    handleLoad(done) {
-        setTimeout(() => {
-            done();
-        }, 2000);
-    }
-
-    getPullToRefreshDisplay() {
-        switch (this.state.pullToRefreshState) {
-            case 'initial':
-                return '哎哎哎别拉别拉';
-            case 'preaction':
-                return '快松手啦';
-            case 'action':
-                return (<div><i className="fa fa-spinner fa-spin fa-fw" />又要刷新了</div>);
-        }
-    }
-
     render() {
-
+        let tables = this.props.hall.content ? this.props.hall.content.tables.map((table) => {
+            return <Table key={table.id} table={table}/>;
+        }) : null;
         return (
             <Page renderToolbar={() => <Navbar onToolBarButtonClicked={this.onToolBarButtonClicked} currentPageName='大厅' />}>
-                <PullHook
-                    onChange={this.handleChange}
-                    onLoad={this.handleLoad}
-                >
-                    {this.getPullToRefreshDisplay()}
-                </PullHook>
-                <TableList/>
+                {tables}
             </Page>
         )
     }

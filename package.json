@@ -7,11 +7,13 @@
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-onsenui": "*",
+    "react-router": "latest",
     "socket.io-client": "latest",
     "redux": "latest",
     "react-redux": "latest",
     "redux-devtools": "latest",
     "redux-thunk": "latest",
-    "socket.io-request": "latest"
+    "socket.io-request": "latest",
+    "react-addons-css-transition-group": "^15.0.2"
   }
 }

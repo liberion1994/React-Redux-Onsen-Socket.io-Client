@@ -26,7 +26,7 @@ export default class LoadingMask extends React.Component {
                     style={{
                         width: '100%',
                         height: '100%',
-                        background: '#e0e0e0',
+                        background: '#080808',
                         opacity: '0.6'
                     }}
                 >
@@ -37,11 +37,12 @@ export default class LoadingMask extends React.Component {
                     position: 'absolute',
                     transform: 'translate(-50%, -50%)',
                     textAlign: 'center',
+                    color: 'white',
                     zIndex: 9999,
                     opacity: '1'
                 }}>
                     <ProgressCircular indeterminate/>
-                    <div>网络有点差，加载中</div>
+                    <div>{this.props.message}</div>
                 </div>
             </div>
         )

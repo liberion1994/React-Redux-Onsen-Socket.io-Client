@@ -29,25 +29,23 @@ export const Socket = {
     DISCONNECTED: '未连接'
 };
 
+export const Hall = {
+    UNFETCHED: '未获取',
+    REQUESTED: '已请求',
+    FETCHED: '已获取',
+    FAILED: '获取失败'
+};
+
 const exampleState = {
     socket: Socket.CONNECTED,
     auth: Authentication.UNAUTHENTICATED,
-    pageLocation: PageLocation.PLAYERS,
-    agentStatus: AgentStatus.HALL,
-    tables: {
-        eventId: 0,
-        content: []
-    },
-    table: {
-        eventId: 0,
-        seats: [],
-        game: null
-    },
-    players: {
-        updatedAt: new Date(),
-        content: []
-    },
-    settings: {
 
-    }
+    hall: {
+        state: Hall.FETCHED,
+        content: {
+            eventId: 0,
+            tables: []
+        }
+    },
+
 };

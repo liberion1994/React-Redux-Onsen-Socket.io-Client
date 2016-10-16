@@ -6,14 +6,6 @@ import { combineReducers } from 'redux'
 import * as Actions from './actions';
 import * as StateTypes from './stateTypes';
 
-function reducer(state = {}, action){
-    switch(action.type){
-        case 'message':
-            return { ...state, ...{message:action.data} };
-        default:
-            return state;
-    }
-}
 
 function auth(state = {
     state: StateTypes.Authentication.UNAUTHENTICATED,
@@ -42,10 +34,23 @@ function socket(state = {state: StateTypes.Socket.DISCONNECTED}, action) {
     }
 }
 
+function hall(state = {state: StateTypes.Hall.UNFETCHED, content: null}, action) {
+    switch (action.type) {
+        case Actions.GET_TABLE_REQUEST:
+            return { ...state, ...{ state: StateTypes.Hall.REQUESTED } };
+        case Actions.GET_TABLE_SUCCESS:
+            return { ...state, ...{ state: StateTypes.Hall.FETCHED, content: action.content } };
+        case Actions.AUTH_FAILURE:
+            return { ...state, ...{ state: StateTypes.Hall.FAILED, errorInfo: action.errorInfo } };
+        default:
+            return state;
+    }
+}
+
 const reduxApp = combineReducers({
-    reducer,
     socket,
-    auth
+    auth,
+    hall
 });
 
 export default reduxApp;
