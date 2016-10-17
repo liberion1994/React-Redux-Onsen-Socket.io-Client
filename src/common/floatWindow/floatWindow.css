@@ -2,6 +2,7 @@
     position: fixed;
     top: 10vh;
     z-index: 2;
+    transition: transform .5s;
 }
 
 .tab {
@@ -13,17 +14,18 @@
     display: block;
     background: black;
     color: white;
-    opacity: 0.3;
+    opacity: .6;
     box-shadow: 0 2px 2px #aaaaaa;
 }
 
 .content {
     display: block;
+    width: 90vw;
+    height: 45vh;
     background: black;
     color: white;
-    opacity: 0.3;
-    box-shadow: 0 2px 2px #aaaaaa;
-    transition: width .5s, height .5s;
+    opacity: .6;
+    box-shadow: 2px 2px 2px #aaaaaa;
 }
 
 .noti {

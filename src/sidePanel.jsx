@@ -42,7 +42,7 @@ export default class SidePanel extends React.Component {
                 side='left'
                 width={200}
                 collapse={true}
-                isSwipeable={true}
+                isSwipeable={false}
                 isOpen={this.state.isOpen}
                 onClose={this.hide}
                 onOpen={this.show}>

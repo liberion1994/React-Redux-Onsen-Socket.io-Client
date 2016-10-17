@@ -36,6 +36,12 @@ export const Hall = {
     FAILED: '获取失败'
 };
 
+export const MessageSent = {
+    NONE_OR_DONE: '无消息发送或发送成功',
+    REQUESTED: '已请求',
+    FAILED: '发送失败'
+};
+
 const exampleState = {
     socket: Socket.CONNECTED,
     auth: Authentication.UNAUTHENTICATED,
@@ -45,6 +51,10 @@ const exampleState = {
         content: {
             eventId: 0,
             tables: []
+        },
+        chats: {
+            newArrived: false,
+            content: []
         }
     },
 

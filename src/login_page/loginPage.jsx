@@ -1,9 +1,7 @@
 import React from "react";
 import {Page, Toolbar, Input, Carousel, CarouselItem, Button} from "react-onsenui";
-import ons from "onsenui"
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
-import './loginPage.css'
+import ons from "onsenui";
+import "./loginPage.css";
 
 export default class LoginPage extends React.Component {
 

@@ -1,7 +1,11 @@
 import React from "react";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Page} from "react-onsenui";
+
 import Navbar from "../common/navbar";
 import Table from "./table";
+
+import '../css/transition.css';
 
 export default class HallPage extends React.Component {
 
@@ -28,7 +32,12 @@ export default class HallPage extends React.Component {
         }) : null;
         return (
             <Page renderToolbar={() => <Navbar onToolBarButtonClicked={this.onToolBarButtonClicked} currentPageName='大厅' />}>
-                {tables}
+                <ReactCSSTransitionGroup
+                    transitionName="fade"
+                    transitionEnterTimeout={300}
+                    transitionLeaveTimeout={300}>
+                    {tables}
+                </ReactCSSTransitionGroup>
             </Page>
         )
     }

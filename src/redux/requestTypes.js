@@ -10,3 +10,5 @@ export const AUTH_TYPES = {
 };
 
 export const GET_TABLES = 'GET_TABLES';
+
+export const CHAT = 'CHAT';

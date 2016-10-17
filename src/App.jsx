@@ -8,7 +8,7 @@ import SidePanel from "./sidePanel";
 import GamePage from "./game/gamePage";
 import LoginPage from "./login_page/loginPage";
 import LoadingMask from "./common/loadingMask/loadingMask";
-import FloatWindow from "./common/floatWindow/floatWindow";
+import ChannelWindow from "./common/channelWindow/channelWindow";
 
 import * as StateTypes from "./redux/stateTypes";
 import * as Actions from "./redux/actions";
@@ -62,6 +62,12 @@ class App extends React.Component {
             loadingMask = (<LoadingMask message="连接至服务器"/>);
         if (this.props.auth.state == StateTypes.Authentication.REQUESTED)
             loadingMask = (<LoadingMask message="登陆中..."/>);
+        /**
+         * 这种状态下不知道验证与否
+         */
+        if (this.props.auth.state == StateTypes.Authentication.UNAUTHENTICATED) {
+            return (<div>{loadingMask}</div>)
+        }
         if (this.props.auth.state != StateTypes.Authentication.AUTHENTICATED) {
             return (
                 <div>
@@ -93,6 +99,8 @@ class App extends React.Component {
             default:
                 break;
         }
+        let chats = [];
+        let events = [];
         return (
             <Splitter>
                 <SidePanel
@@ -109,18 +117,16 @@ class App extends React.Component {
                     </ReactCSSTransitionGroup>
                 </SplitterContent>
                 {loadingMask}
-                <FloatWindow
+                <ChannelWindow
                     top={10}
                     float="right"
-                    tab="大厅"
-                    content=""
+                    channelName="大厅"
+                    chats={this.props.hall.chats}
+                    events={chats}
+                    onMessageSent={(message) => {this.props.dispatch(Actions.send_message(message))}}
+                    onFoldChange={(newState) => {this.props.dispatch(Actions.hall_chat_read())}}
                 />
-                <FloatWindow
-                    top={20}
-                    float="right"
-                    tab="游戏"
-                    content=""
-                />
+
             </Splitter>
         );
     }
