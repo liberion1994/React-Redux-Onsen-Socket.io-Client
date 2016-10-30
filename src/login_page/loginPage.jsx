@@ -1,6 +1,9 @@
 import React from "react";
 import {Page, Toolbar, Input, Carousel, CarouselItem, Button} from "react-onsenui";
 import ons from "onsenui";
+
+import * as StateTypes from "../redux/stateTypes";
+
 import "./loginPage.css";
 
 export default class LoginPage extends React.Component {
@@ -39,6 +42,9 @@ export default class LoginPage extends React.Component {
     }
 
     render() {
+
+        var requested = (this.props.auth.state == StateTypes.Authentication.REQUESTED);
+
         return (
             <div
                 style={{
@@ -87,10 +93,11 @@ export default class LoginPage extends React.Component {
                                 placeholder="密码"
                             />
                             <Button
+                                disabled={requested}
                                 modifier="outline"
                                 style={{width: "60%", marginTop: '5vh'}}
                                 onClick={this.handleLogin}
-                            >登录</Button>
+                            >{requested ? '已请求' : '登录'}</Button>
                         </CarouselItem>
                         <CarouselItem>
                             <div className="to-left-page">
@@ -124,10 +131,11 @@ export default class LoginPage extends React.Component {
                                 placeholder="重复密码"
                             />
                             <Button
+                                disabled={requested}
                                 modifier="outline"
                                 style={{width: "60%", marginTop: '5vh'}}
                                 onClick={this.handleRegister}
-                            >注册</Button>
+                            >{requested ? '已请求' : '注册'}</Button>
                         </CarouselItem>
                     </Carousel>
                     <div style={{
@@ -138,7 +146,7 @@ export default class LoginPage extends React.Component {
                         textAlign: 'center',
                         color: 'red',
                         fontSize: '3vw'
-                    }}>{this.props.errorInfo}</div>
+                    }}>{this.props.auth.errorInfo || ''}</div>
                 </Page>
             </div>
         )

@@ -10,5 +10,9 @@ export const AUTH_TYPES = {
 };
 
 export const GET_TABLES = 'GET_TABLES';
+export const GET_GAME = 'GET_GAME';
 
 export const CHAT = 'CHAT';
+
+export const ENTER_TABLE = 'ENTER_TABLE';
+export const LEAVE_TABLE = 'LEAVE_TABLE';

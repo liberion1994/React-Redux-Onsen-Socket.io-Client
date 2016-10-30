@@ -12,14 +12,19 @@ export default class Table extends React.Component {
     }
 
     render() {
+        let seats = this.props.table.seatsOccupied.map((occupied, index) => {
+            let className = (occupied ? "seat-occupied" : "seat") + " seat" + (index + 1);
+            return <div
+                key={index + 1}
+                className={className}
+                onClick={() => {this.props.enter(index)}}
+            >
+            </div>;
+        });
         return (
             <div className="table-whole">
                 <div className="table">第{this.props.table.id}桌</div>
-                <div className="seat seat1"></div>
-                <div className="seat seat2"></div>
-                <div className="seat seat3"></div>
-                <div className="seat seat4"></div>
-                <div className="seat seat5"></div>
+                {seats}
             </div>
         )
     }

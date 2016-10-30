@@ -5,7 +5,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import HallPage from "./hall_page/hallPage";
 import SidePanel from "./sidePanel";
-import GamePage from "./game/gamePage";
+import GamePage from "./game_page/gamePage";
+import WelcomePage from "./welcome_page/welcomePage"
 import LoginPage from "./login_page/loginPage";
 import LoadingMask from "./common/loadingMask/loadingMask";
 import ChannelWindow from "./common/channelWindow/channelWindow";
@@ -21,79 +22,90 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            sidePanelShown: false,
-            currentPageName: '大厅',
-            responseTimeout: false
+            sidePanelShown: false
         };
 
-        this.onToolBarButtonClicked = this.onToolBarButtonClicked.bind(this);
         this.onPagePicked = this.onPagePicked.bind(this);
-        this.requestLogin = this.requestLogin.bind(this);
-        this.requestRegister = this.requestRegister.bind(this);
-        this.loadHallInfo = this.loadHallInfo.bind(this);
-    }
-
-    onToolBarButtonClicked() {
-        this.setState({sidePanelShown: true});
     }
 
     onPagePicked(title) {
-        this.setState({currentPageName: title, sidePanelShown: false});
-    }
-
-    requestLogin(username, password) {
-        this.props.dispatch(Actions.authenticate(
-            {type: RequestTypes.AUTH_TYPES.LOGIN, username: username, password: password}));
-    }
-
-    requestRegister(username, password) {
-        this.props.dispatch(Actions.authenticate(
-            {type: RequestTypes.AUTH_TYPES.REG_AND_LOGIN, username: username, password: password}));
-    }
-
-    loadHallInfo() {
-        if (this.props.hall.state != StateTypes.Hall.FETCHED)
-            this.props.dispatch(Actions.get_tables());
+        switch (title) {
+            case '大厅':
+                this.props.dispatch(Actions.to_hall_page());
+                break;
+            case '游戏':
+                this.props.dispatch(Actions.to_game_page());
+                break;
+            case '玩家':
+                this.props.dispatch(Actions.to_players_page());
+                break;
+            case '设置':
+                this.props.dispatch(Actions.to_settings_page());
+                break;
+            //TODO 登出
+        }
+        this.setState({sidePanelShown: false});
     }
 
     render() {
         let loadingMask;
-        if (this.props.socket.state == StateTypes.Socket.DISCONNECTED)
+        if (this.props.socket.state == StateTypes.Socket.TIMEOUT)
             loadingMask = (<LoadingMask message="连接至服务器"/>);
-        if (this.props.auth.state == StateTypes.Authentication.REQUESTED)
-            loadingMask = (<LoadingMask message="登陆中..."/>);
-        /**
-         * 这种状态下不知道验证与否
-         */
+
         if (this.props.auth.state == StateTypes.Authentication.UNAUTHENTICATED) {
-            return (<div>{loadingMask}</div>)
+            //初始状态，加载一个欢迎页面
+            return (
+                <div>
+                    <WelcomePage />
+                    {loadingMask}
+                </div>
+            )
         }
         if (this.props.auth.state != StateTypes.Authentication.AUTHENTICATED) {
             return (
                 <div>
                     <LoginPage
-                        errorInfo={this.props.auth.errorInfo}
-                        requestLogin={this.requestLogin}
-                        requestRegister={this.requestRegister} />
+                        auth={this.props.auth}
+                        requestLogin={(username, password) => {
+                            this.props.dispatch(Actions.authenticate(
+                                {type: RequestTypes.AUTH_TYPES.LOGIN, username: username, password: password}));
+                        }}
+                        requestRegister={(username, password) => {
+                            this.props.dispatch(Actions.authenticate(
+                                {type: RequestTypes.AUTH_TYPES.REG_AND_LOGIN, username: username, password: password}));
+                        }}
+                    />
                     {loadingMask}
-                </div>)
+                </div>
+            )
         }
+
         let currentPage;
-        switch(this.state.currentPageName) {
-            case '大厅':
+        switch(this.props.pageLocation.state) {
+            case StateTypes.PageLocation.HALL:
                 currentPage = (
                     <HallPage
-                        key={this.state.currentPageName}
+                        key={this.props.pageLocation}
                         hall={this.props.hall}
-                        loadData={this.loadHallInfo}
-                        onToolBarButtonClicked={this.onToolBarButtonClicked}
+                        loadData={() => {
+                            if (this.props.hall.state != StateTypes.Hall.FETCHED)
+                                this.props.dispatch(Actions.get_tables());
+                        }}
+                        onToolBarButtonClicked={() => {this.setState({sidePanelShown: true})}}
+                        onEnterTable={(content) => {this.props.dispatch(Actions.enter_table(content))}}
                     />);
                 break;
-            case '游戏':
+            case StateTypes.PageLocation.GAME:
                 currentPage = (
                     <GamePage
-                        key={this.state.currentPageName}
-                        onToolBarButtonClicked={this.onToolBarButtonClicked}
+                        key={this.props.pageLocation}
+                        game={this.props.game}
+                        loadData={() => {
+                            if (this.props.game.state != StateTypes.Game.FETCHED)
+                                this.props.dispatch(Actions.get_game());
+                        }}
+                        onToolBarButtonClicked={() => {this.setState({sidePanelShown: true})}}
+                        onLeaveTable={() => {this.props.dispatch(Actions.leave_table())}}
                     />);
                 break;
             default:
@@ -106,7 +118,7 @@ class App extends React.Component {
                 <SidePanel
                     onPagePicked={this.onPagePicked}
                     sidePanelShown={this.state.sidePanelShown}
-                    username={this.props.auth.username}
+                    username={this.props.agent.username}
                 />
                 <SplitterContent>
                     <ReactCSSTransitionGroup
@@ -138,7 +150,10 @@ function select(state) {
     return {
         auth: state.auth,
         socket: state.socket,
-        hall: state.hall
+        agent: state.agent,
+        hall: state.hall,
+        game: state.game,
+        pageLocation: state.pageLocation
     }
 }
 

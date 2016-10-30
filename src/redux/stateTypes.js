@@ -3,6 +3,8 @@
  */
 
 export const AgentStatus = {
+    UNINITIATED: '初始化',
+    CONNECTING: '通信中',
     HALL: '大厅',
     UNPREPARED: '未准备',
     PREPARED: '已准备',
@@ -25,6 +27,8 @@ export const Authentication = {
 };
 
 export const Socket = {
+    UNINITIATED: '初始化',
+    TIMEOUT: '无响应',
     CONNECTED: '已连接',
     DISCONNECTED: '未连接'
 };
@@ -36,15 +40,37 @@ export const Hall = {
     FAILED: '获取失败'
 };
 
+export const Game = {
+    UNFETCHED: '未获取',
+    REQUESTED: '已请求',
+    FETCHED: '已获取',
+    FAILED: '获取失败',
+    NONE: '未在游戏中'
+};
+
 export const MessageSent = {
     NONE_OR_DONE: '无消息发送或发送成功',
     REQUESTED: '已请求',
     FAILED: '发送失败'
 };
 
+export const OperationSent = {
+    NONE_OR_DONE: '无操作发送或发送成功',
+    REQUESTED: '已请求',
+    FAILED: '发送失败'
+};
+
 const exampleState = {
-    socket: Socket.CONNECTED,
-    auth: Authentication.UNAUTHENTICATED,
+    socket: {
+        state: Socket.CONNECTED
+    },
+    auth: {
+        state: Authentication.UNAUTHENTICATED
+    },
+
+    agent: {
+        state: AgentStatus.HALL
+    },
 
     hall: {
         state: Hall.FETCHED,
@@ -57,5 +83,9 @@ const exampleState = {
             content: []
         }
     },
+
+    table: {
+        state: Game.FETCHED
+    }
 
 };

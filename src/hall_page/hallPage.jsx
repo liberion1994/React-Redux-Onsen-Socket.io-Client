@@ -28,7 +28,11 @@ export default class HallPage extends React.Component {
 
     render() {
         let tables = this.props.hall.content ? this.props.hall.content.tables.map((table) => {
-            return <Table key={table.id} table={table}/>;
+            return <Table
+                key={table.id}
+                table={table}
+                enter={(sid)=> {this.props.onEnterTable({tid: table.id, sid: sid})}}
+            />;
         }) : null;
         return (
             <Page renderToolbar={() => <Navbar onToolBarButtonClicked={this.onToolBarButtonClicked} currentPageName='大厅' />}>

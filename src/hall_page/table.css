@@ -35,7 +35,19 @@
     box-shadow: 1px 1px 1px #aaaaaa;
 }
 
-.seat:active {
+.seat-occupied {
+    position: absolute;
+    width: 15%;
+    height: 15%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: solid 1.5vw white;
+    transition: border-width .1s;
+    background: red;
+    box-shadow: 1px 1px 1px #aaaaaa;
+}
+
+.seat:active, .seat:active {
     border-width: 0;
 }
 
